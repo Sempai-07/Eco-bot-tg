@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bot Info</title>
+    <link rel="stylesheet" type="text/css" href="css/bot-info.css">
+  </head>
+  <body>
+    <h1>Bot Info</h1>
+    <h2>Bot status</h2>
+    <p>Bot name: <span id="botName"></span></p>
+    <p>Bot username: <span id="botUsername"></span></p>
+    <p>Total commands: <span id="totalCommands"></span></p>
+    <p>Total events: <span id="totalEvents"></span></p>
+    <p>Bot uptime: <span id="updateTime"></span></p>
+    <h2>Economy</h2>
+    <p>All money: <span id="globalCount"></span></p>
+    <p>Top 1: <span id="userTop1"></span></p>
+    <script>
+    function updateBotInfo() {
+      fetch('/bot-info')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('botName').textContent = data.botName;
+        document.getElementById('botUsername').textContent = data.botUsername;
+        document.getElementById('totalCommands').textContent = data.totalCommands;
+        document.getElementById('totalEvents').textContent = data.totalEvents;
+        document.getElementById('updateTime').textContent = data.updateTime;
+        document.getElementById('globalCount').textContent = data.globalCount;
+        const userTop = data.userTop;
+        if (userTop.username) {
+          const userLink = document.createElement('a');
+          userLink.href = 'https://t.me/' + userTop.username;
+          userLink.textContent = userTop.username;
+          document.getElementById('userTop1').innerHTML = '';
+          document.getElementById('userTop1').appendChild(userLink);
+        } else {
+          document.getElementById('userTop1').textContent = userTop.first_name;
+        }
+      })
+      .catch(error => console.error(error));
+    }
+    
+    updateBotInfo();
+    setInterval(updateBotInfo, 1000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "cron": "^2.3.0",
+    "database-sempai": "^2.1.5",
+    "moment-timezone": "^0.5.43",
+    "ms": "^2.1.3",
+    "telegramsjs": "^0.8.7"
+  }
+}
